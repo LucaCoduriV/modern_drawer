@@ -24,6 +24,23 @@ class MyApp extends StatelessWidget {
           ),
           title: Text('Modern Drawer'),
         ),
+        drawerContent: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: const [
+            Text("coucou"),
+            Text("coucou"),
+            Text("coucou"),
+            Text("coucou"),
+            Text("coucou"),
+            Text("coucou"),
+          ],
+        ),
+        body: Container(
+          color: Colors.green,
+          child: Center(
+            child: Text('Body'),
+          ),
+        ),
       ),
     );
   }

@@ -4,9 +4,16 @@ import 'package:flutter/material.dart';
 
 class ModernDrawer extends StatelessWidget {
   final AppBar? appBar;
+  final Widget? body;
   final ModernDrawerController controller;
-  const ModernDrawer({Key? key, this.appBar, required this.controller})
-      : super(key: key);
+  final Widget? drawerContent;
+  const ModernDrawer({
+    Key? key,
+    this.appBar,
+    required this.controller,
+    this.body,
+    this.drawerContent,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -17,24 +24,26 @@ class ModernDrawer extends StatelessWidget {
             height: double.infinity,
             width: double.infinity,
             color: Colors.red,
-            child: _Drawer(),
+            child: _Drawer(drawerContent: drawerContent),
           ),
         ),
-        _Body(appBar: appBar, controller: controller),
+        _Body(
+          appBar: appBar,
+          controller: controller,
+          body: body,
+        ),
       ],
     );
   }
 }
 
 class _Body extends StatefulWidget {
-  const _Body({
-    Key? key,
-    this.appBar,
-    required this.controller,
-  }) : super(key: key);
+  const _Body({Key? key, this.appBar, required this.controller, this.body})
+      : super(key: key);
 
   final AppBar? appBar;
   final ModernDrawerController controller;
+  final Widget? body;
 
   @override
   __BodyState createState() => __BodyState();
@@ -88,12 +97,7 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
           borderRadius: BorderRadius.circular(cornerAnim.value),
           child: Scaffold(
             appBar: widget.appBar,
-            body: Container(
-              color: Colors.green,
-              child: Center(
-                child: Text('Body'),
-              ),
-            ),
+            body: widget.body,
           ),
         ),
       ),
@@ -108,23 +112,12 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
 }
 
 class _Drawer extends StatelessWidget {
-  const _Drawer({Key? key}) : super(key: key);
+  final Widget? drawerContent;
+  const _Drawer({Key? key, this.drawerContent}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text("coucou"),
-          Text("coucou"),
-          Text("coucou"),
-          Text("coucou"),
-          Text("coucou"),
-          Text("coucou"),
-        ],
-      ),
-    );
+    return SafeArea(child: drawerContent ?? Container());
   }
 }
 
