@@ -15,6 +15,14 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       home: ModernDrawer(
         controller: controller,
+        bodyBoxShadows: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.2),
+            spreadRadius: 10,
+            blurRadius: 7,
+            offset: Offset(0, 3), // changes position of shadow
+          ),
+        ],
         appBar: AppBar(
           leading: IconButton(
             icon: Icon(Icons.menu),

@@ -8,7 +8,7 @@ class ModernDrawer extends StatelessWidget {
   final ModernDrawerController controller;
   final Widget? drawerContent;
   final Color? backgroundColor;
-  final BoxDecoration? bodyContainerDecoration;
+  final List<BoxShadow>? bodyBoxShadows;
   const ModernDrawer({
     Key? key,
     this.appBar,
@@ -16,7 +16,7 @@ class ModernDrawer extends StatelessWidget {
     this.body,
     this.drawerContent,
     this.backgroundColor,
-    this.bodyContainerDecoration,
+    this.bodyBoxShadows,
   }) : super(key: key);
 
   @override
@@ -37,6 +37,7 @@ class ModernDrawer extends StatelessWidget {
           appBar: appBar,
           controller: controller,
           body: body,
+          bodyBoxShadows: bodyBoxShadows,
         ),
       ],
     );
@@ -49,10 +50,10 @@ class _Body extends StatefulWidget {
     this.appBar,
     required this.controller,
     this.body,
-    this.bodyContainerDecoration,
+    this.bodyBoxShadows,
   }) : super(key: key);
 
-  final BoxDecoration? bodyContainerDecoration;
+  final List<BoxShadow>? bodyBoxShadows;
   final PreferredSizeWidget? appBar;
   final ModernDrawerController controller;
   final Widget? body;
@@ -111,10 +112,10 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
       child: Transform.scale(
         scale: scaleAnim.value,
         child: Container(
-          decoration: widget.bodyContainerDecoration ??
-              BoxDecoration(
-                borderRadius: BorderRadius.circular(cornerAnim.value),
-                boxShadow: [
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(cornerAnim.value),
+            boxShadow: widget.bodyBoxShadows ??
+                [
                   BoxShadow(
                     color: Colors.black.withOpacity(0.2),
                     spreadRadius: 10,
@@ -122,7 +123,7 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
                     offset: Offset(0, 3), // changes position of shadow
                   ),
                 ],
-              ),
+          ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(cornerAnim.value),
             child: GestureDetector(
