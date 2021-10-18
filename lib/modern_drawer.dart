@@ -23,7 +23,7 @@ class ModernDrawer extends StatelessWidget {
           child: Container(
             height: double.infinity,
             width: double.infinity,
-            color: Colors.red,
+            color: Color(0xFF32323F),
             child: _Drawer(drawerContent: drawerContent),
           ),
         ),
@@ -93,11 +93,24 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
       offset: Offset(transAnim.value, 0),
       child: Transform.scale(
         scale: scaleAnim.value,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(cornerAnim.value),
-          child: Scaffold(
-            appBar: widget.appBar,
-            body: widget.body,
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(cornerAnim.value),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withOpacity(0.2),
+                spreadRadius: 10,
+                blurRadius: 7,
+                offset: Offset(0, 3), // changes position of shadow
+              ),
+            ],
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(cornerAnim.value),
+            child: Scaffold(
+              appBar: widget.appBar,
+              body: widget.body,
+            ),
           ),
         ),
       ),
