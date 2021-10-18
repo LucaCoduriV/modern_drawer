@@ -79,12 +79,17 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
 
   void open() {
     controller.forward();
-    _open = true;
+
+    setState(() {
+      _open = true;
+    });
   }
 
   void close() {
     controller.animateBack(0);
-    _open = false;
+    setState(() {
+      _open = false;
+    });
   }
 
   @override
@@ -107,9 +112,17 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(cornerAnim.value),
-            child: Scaffold(
-              appBar: widget.appBar,
-              body: widget.body,
+            child: GestureDetector(
+              onTap: () {
+                if (_open) widget.controller.closeDrawer();
+              },
+              child: AbsorbPointer(
+                absorbing: _open,
+                child: Scaffold(
+                  appBar: widget.appBar,
+                  body: widget.body,
+                ),
+              ),
             ),
           ),
         ),
@@ -147,12 +160,16 @@ class ModernDrawerController {
     _close = func;
   }
 
+  get isOpen => _isOpen;
+
   void openDrawer() {
     _open();
+    _isOpen = true;
   }
 
   void closeDrawer() {
     _close();
+    _isOpen = false;
   }
 
   void toggleDrawer() {
