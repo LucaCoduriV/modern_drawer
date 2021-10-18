@@ -3,11 +3,12 @@ library modern_drawer;
 import 'package:flutter/material.dart';
 
 class ModernDrawer extends StatelessWidget {
-  final AppBar? appBar;
+  final PreferredSizeWidget? appBar;
   final Widget? body;
   final ModernDrawerController controller;
   final Widget? drawerContent;
   final Color? backgroundColor;
+  final BoxDecoration? bodyContainerDecoration;
   const ModernDrawer({
     Key? key,
     this.appBar,
@@ -15,6 +16,7 @@ class ModernDrawer extends StatelessWidget {
     this.body,
     this.drawerContent,
     this.backgroundColor,
+    this.bodyContainerDecoration,
   }) : super(key: key);
 
   @override
@@ -42,10 +44,16 @@ class ModernDrawer extends StatelessWidget {
 }
 
 class _Body extends StatefulWidget {
-  const _Body({Key? key, this.appBar, required this.controller, this.body})
-      : super(key: key);
+  const _Body({
+    Key? key,
+    this.appBar,
+    required this.controller,
+    this.body,
+    this.bodyContainerDecoration,
+  }) : super(key: key);
 
-  final AppBar? appBar;
+  final BoxDecoration? bodyContainerDecoration;
+  final PreferredSizeWidget? appBar;
   final ModernDrawerController controller;
   final Widget? body;
 
@@ -103,17 +111,18 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
       child: Transform.scale(
         scale: scaleAnim.value,
         child: Container(
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(cornerAnim.value),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.2),
-                spreadRadius: 10,
-                blurRadius: 7,
-                offset: Offset(0, 3), // changes position of shadow
+          decoration: widget.bodyContainerDecoration ??
+              BoxDecoration(
+                borderRadius: BorderRadius.circular(cornerAnim.value),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.2),
+                    spreadRadius: 10,
+                    blurRadius: 7,
+                    offset: Offset(0, 3), // changes position of shadow
+                  ),
+                ],
               ),
-            ],
-          ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(cornerAnim.value),
             child: GestureDetector(
@@ -152,8 +161,8 @@ class _Drawer extends StatelessWidget {
 }
 
 class ModernDrawerController {
-  late final Function _open;
-  late final Function _close;
+  late Function? _open;
+  late Function? _close;
   bool _isOpen = false;
 
   set open(Function func) {
@@ -167,12 +176,12 @@ class ModernDrawerController {
   get isOpen => _isOpen;
 
   void openDrawer() {
-    _open();
+    _open!();
     _isOpen = true;
   }
 
   void closeDrawer() {
-    _close();
+    _close!();
     _isOpen = false;
   }
 
@@ -184,5 +193,10 @@ class ModernDrawerController {
       openDrawer();
       _isOpen = true;
     }
+  }
+
+  void dispose() {
+    _open = null;
+    _close = null;
   }
 }
