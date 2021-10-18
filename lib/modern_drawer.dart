@@ -7,12 +7,14 @@ class ModernDrawer extends StatelessWidget {
   final Widget? body;
   final ModernDrawerController controller;
   final Widget? drawerContent;
+  final Color? backgroundColor;
   const ModernDrawer({
     Key? key,
     this.appBar,
     required this.controller,
     this.body,
     this.drawerContent,
+    this.backgroundColor,
   }) : super(key: key);
 
   @override
@@ -23,8 +25,10 @@ class ModernDrawer extends StatelessWidget {
           child: Container(
             height: double.infinity,
             width: double.infinity,
-            color: Color(0xFF32323F),
             child: _Drawer(drawerContent: drawerContent),
+            decoration: BoxDecoration(
+              color: backgroundColor ?? Color(0xFF32323F),
+            ),
           ),
         ),
         _Body(
