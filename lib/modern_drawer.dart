@@ -87,7 +87,6 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
         .animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
     cornerAnim = Tween(begin: 0.0, end: 20.0)
         .animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
-    controller.forward();
   }
 
   void open() {
