@@ -38,6 +38,7 @@ class ModernDrawer extends StatelessWidget {
           controller: controller,
           body: body,
           bodyBoxShadows: bodyBoxShadows,
+          translationSize: MediaQuery.of(context).size.width / 2,
         ),
       ],
     );
@@ -45,14 +46,15 @@ class ModernDrawer extends StatelessWidget {
 }
 
 class _Body extends StatefulWidget {
-  const _Body({
-    Key? key,
-    this.appBar,
-    required this.controller,
-    this.body,
-    this.bodyBoxShadows,
-  }) : super(key: key);
-
+  const _Body(
+      {Key? key,
+      this.appBar,
+      required this.controller,
+      this.body,
+      this.bodyBoxShadows,
+      required this.translationSize})
+      : super(key: key);
+  final double translationSize;
   final List<BoxShadow>? bodyBoxShadows;
   final PreferredSizeWidget? appBar;
   final ModernDrawerController controller;
@@ -63,7 +65,7 @@ class _Body extends StatefulWidget {
 }
 
 class __BodyState extends State<_Body> with TickerProviderStateMixin {
-  bool _open = true;
+  bool _open = false;
 
   late AnimationController controller;
   late Animation<double> transAnim;
@@ -81,7 +83,7 @@ class __BodyState extends State<_Body> with TickerProviderStateMixin {
       duration: Duration(milliseconds: 300),
       vsync: this,
     )..addListener(() => setState(() {}));
-    transAnim = Tween(begin: 0.0, end: 200.0)
+    transAnim = Tween(begin: 0.0, end: widget.translationSize)
         .animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));
     scaleAnim = Tween(begin: 1.0, end: 0.7)
         .animate(CurvedAnimation(parent: controller, curve: Curves.easeOut));

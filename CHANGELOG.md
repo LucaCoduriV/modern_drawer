@@ -13,3 +13,7 @@
 ## 0.0.4
 
 -   Fixes
+
+## 0.0.5
+
+-   Reacts to screen size
